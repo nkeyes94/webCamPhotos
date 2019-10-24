@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body onload="init()">
+    <!-- * Creating our video element -->
+    <div style="position: relative" class="margin">
+            <video onclick="snapshot(this)" id="inputVideo" autoplay muted></video>
+            <canvas id="overlay"></canvas>
+    </div>
+    <a id="download" download="image.png"><button type="button" onClick='download();'>Download</button></a>
+</body>
+</html>
+
+<script>
+
+var snapshotCount = 0;
+var video = document.getElementById("inputVideo");
+
+async function onPlay(){
+        const videoEl = $('#inputVideo').get(0)
+    }
+    async function run(){
+        console.log("run")
+        const stream = await navigator.mediaDevices.getUserMedia({ video: {} })
+        const videoEl = $('#inputVideo').get(0)
+        videoEl.srcObject = stream
+    }
+    run();
+
+    function init(){
+        canvas = document.getElementById("overlay");
+        ctx = canvas.getContext('2d');
+    }
+    var canvas, ctx;
+    function snapshot() {
+         // Draws current image from the video element into the canvas
+        ctx.drawImage(video, 0,0, canvas.width, canvas.height);
+      }
+
+      function download(){
+        var download = document.getElementById("download");
+        var image = document.getElementById("overlay").toDataURL("image/png")
+                    .replace("image/png", "image/octet-stream");
+        download.setAttribute("href", image);
+
+    }
+</script>
